@@ -21,33 +21,51 @@ Explanation: 342 + 465 = 807.
  * @param {ListNode} l2
  * @return {ListNode}
  */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
 var addTwoNumbers = function (l1, l2) {
-  const getNumFromLinkedList = (node) => {
-    let curNode = node;
-    const nums = [];
-    while (curNode) {
-      nums.push(curNode.val);
-      curNode = curNode.next;
+  let a = l1;
+  let b = l2;
+  let remainder = false;
+  const addNodes = (x, y) => {
+    let result = remainder ? 1 : 0;
+    remainder = false;
+    if (x) {
+      result += x.val;
+      a = x.next;
     }
-    return Number(nums.reverse().join(''));
+
+    if (y) {
+      result += y.val
+      b = y.next;
+    }
+
+    if (result >= 10) {
+      remainder = true;
+      result -= 10;
+    }
+
+    return result;
   };
 
-  const numToLinkedList = (num) => {
-    const charArr = num.toString().split('');
-    let head = null;
-    let curNode = null;
-    for (let i = charArr.length - 1; i >= 0; i--) {
-      if (!head) {
-        head = new ListNode(charArr[i]);
-        curNode = head;
-      } else {
-        curNode.next = new ListNode(charArr[i]);
-        curNode = curNode.next;
-      }
-    }
-    return head;
-  };
+  const result = new ListNode(addNodes(a, b));
+  let currentNode = result;
+  while (a || b) {
+    currentNode.next = new ListNode(addNodes(a, b));
+    currentNode = currentNode.next;
+  }
 
-  const result = getNumFromLinkedList(l1) + getNumFromLinkedList(l2);
-  return numToLinkedList(result);
+  if (remainder) currentNode.next = new ListNode(1);
+
+  return result;
 };
