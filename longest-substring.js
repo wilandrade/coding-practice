@@ -23,8 +23,25 @@ Explanation: The answer is "wke", with the length of 3.
  * @param {string} s
  * @return {number}
  */
-//"abbcd"
-var lengthOfLongestSubstring = function (s) {
 
+var lengthOfLongestSubstring = function (s) {
+  let curCombo = [];
+  let comboMap = {};
+  let max = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    if (!comboMap.hasOwnProperty(s[i])) {
+      curCombo.push(s[i]);
+      comboMap[s[i]] = i;
+      if (curCombo.length > max) max = curCombo.length;
+    } else {
+      const newStart = comboMap[s[i]]; // index of repeated char
+      i = newStart;
+      curCombo = [];
+      comboMap = {};
+    }
+  }
+
+  return max;
 };
 
