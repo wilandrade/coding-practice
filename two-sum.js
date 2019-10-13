@@ -15,13 +15,11 @@ return [0, 1].*/
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
-  let result = [];
+  const numMap = {};
   for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target)
-        return [i, j];
-    }
+    const remaining = target - nums[i];
+    if (numMap.hasOwnProperty(remaining)) return [numMap[remaining], i];
+    numMap[nums[i]] = i;
   }
-
   return null;
 };
