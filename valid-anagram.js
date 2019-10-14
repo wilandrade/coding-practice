@@ -16,4 +16,22 @@ Output: false
  * @return {boolean}
  */
 var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+
+  const sMap = {};
+  for (let i = 0; i < s.length; i++) {
+    if (!sMap.hasOwnProperty(s[i])) {
+      sMap[s[i]] = 0;
+    }
+    sMap[s[i]]++;
+  }
+
+  for (let j = 0; j < t.length; j++) {
+    if (!sMap.hasOwnProperty(t[j]) || sMap[t[j]] < 1) {
+      return false;
+    }
+    sMap[t[j]]--;
+  }
+
+  return true;
 };
