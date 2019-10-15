@@ -23,5 +23,27 @@ One longest palindrome that can be built is "dccaccd", whose length is 7.
  * @return {number}
  */
 var longestPalindrome = function (s) {
+  const charMap = {};
 
+  for (let i = 0; i < s.length; i++) {
+    if (!charMap.hasOwnProperty(s[i])) {
+      charMap[s[i]] = 0;
+    }
+
+    charMap[s[i]]++;
+  }
+
+  let maxPalindromeLen = 0;
+  let hasExtra = false;
+  for (key in charMap) {
+    if (charMap[key] > 1) {
+      const additionalChars = parseInt(charMap[key] / 2, 10);
+      maxPalindromeLen += additionalChars * 2;
+    }
+    if (charMap[key] % 2) {
+      hasExtra = true;
+    }
+  }
+
+  return hasExtra ? maxPalindromeLen + 1 : maxPalindromeLen;
 };
