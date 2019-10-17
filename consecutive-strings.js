@@ -11,4 +11,14 @@ consecutive strings : follow one after another without an interruption
 */
 
 function longestConsec(strarr, k) {
+  if (k > strarr.length || k <= 0) return "";
+
+  var combos = [];
+  for (var i = 0; i <= (strarr.length - k); i++) {
+    combos.push(strarr.slice(i, i + k).join(''));
+  }
+
+  return combos.reduce(function (accumulator, item) {
+    return accumulator.length >= item.length ? accumulator : item;
+  }, '');
 }
